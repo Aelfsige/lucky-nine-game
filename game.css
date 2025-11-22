@@ -1,0 +1,89 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    overflow: hidden;
+}
+
+.buttons{
+    position: fixed;
+    bottom: 0;
+
+    background-color: red;
+    width: 100%;
+    height: 10%;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.buttons > button{
+    border: 2px solid silver;
+    color: white;
+    font-size: 32px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(red, black);
+}
+
+button:disabled{
+    background-image: linear-gradient(aqua, yellow);
+}
+
+.close{
+    display: none;
+}
+
+.cards{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card{
+    width: 90%;
+}
+
+.card:nth-child(1){
+    position: absolute;
+    bottom: 35%;
+}
+
+.card:nth-child(2){
+    position: absolute;
+    bottom: 10%;
+}
+
+.card:nth-child(3){
+    position: absolute;
+    bottom: -15%;
+}
+
+.timer{
+    font-size: 60px;
+    background-color: red;
+    border: 10px solid blue;
+    color: white;
+    /* padding: 10px; */
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    right: 5%;
+    top: 2%;
+}

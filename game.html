@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swerte Syam - The Game</title>
+    <link rel="stylesheet" href="game.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.8.1/socket.io.js"
+        integrity="sha512-8BHxHDLsOHx+flIrQ0DrZcea7MkHqRU5GbTHmbdzMRnAaoCIkZ97PqZcXJkKZckMMhqfoeaJE+DNUVuyoQsO3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <div class="cards">
+        <img src="" alt="card_3" id="card3" class="card close">
+        <img src="" alt="card_2" id="card2" class="card">
+        <img src="" alt="card_1" id="card1" class="card">
+    </div>
+    <div class="buttons open">
+        <button id="draw">Draw</button>
+        <button id="reset" onclick="location.reload()">Reset</button>
+        <button onclick="history.back()">Exit</button>
+    </div>
+    
+    <div class="timer">
+        <span>10</span>
+    </div>
+
+    <script>
+        "use strict"
+        const socket = io()
+        socket.on('cards', (cards) => {
+            function shuffle(array){
+                let current_index = array.length
+
+                while(current_index != 0){
+                    let random_index = Math.floor(Math.random() * current_index)
+                    current_index--
+
+                    [array[current_index], array[random_index]] = [array[random_index], array[current_index]]
+                }
+            }
+
+            shuffle(cards)
+
+            let first_card = Math.floor(Math.random() * cards.length) + 1
+            let second_card = Math.floor(Math.random() * cards.length) + 1
+            let third_card = Math.floor(Math.random() * cards.length) + 1
+
+            while (first_card == second_card){
+                first_card = Math.floor(Math.random() * cards.length) + 1
+                second_card = Math.floor(Math.random() * cards.length) + 1
+            }
+
+            while(cards[first_card] == 'red_joker.svg' || cards[first_card] == 'black_joker.svg'){
+                first_card = Math.floor(Math.random() * cards.length) + 1
+            }
+
+            while(cards[second_card] == 'red_joker.svg' || cards[second_card] == 'black_joker.svg'){
+                second_card = Math.floor(Math.random() * cards.length) + 1
+            }
+
+            setTimeout(() => {
+                document.getElementById('card1').setAttribute('src', `/SVG-cards/${cards[first_card]}`)
+                document.getElementById('card2').setAttribute('src', `/SVG-cards/${cards[second_card]}`)
+            }, 100)
+
+            // Draw one card and disable it after clicking it
+            document.getElementById('draw').addEventListener('click', () => {
+                let third_card = Math.floor(Math.random() * cards.length) + 1
+
+                while(third_card == first_card && third_card == second_card){
+                    third_card = Math.floor(Math.random() * cards.length) + 1
+                }
+
+                while(cards[third_card] == 'red_joker.svg' || cards[third_card] == 'black_joker.svg'){
+                    third_card = Math.floor(Math.random() * cards.length) + 1
+                }
+
+                document.getElementById('card3').setAttribute('src', `/SVG-cards/${cards[third_card]}`)
+                document.getElementById('card3').setAttribute('class', 'card')
+                document.getElementById('draw').disabled = true
+            })
+
+            // User will get new cards
+            document.getElementById('reset').disabled = true
+            
+            let count = 10
+
+            let timer = setInterval(() => {
+                count--
+                document.querySelector('.timer > span').innerHTML = count
+
+                if (count == 0){
+                    clearInterval(timer)
+                    document.getElementById('reset').disabled = false
+                    document.getElementById('draw').disabled = true
+                }
+            }, 1000)
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="contents">
+        <h1>Swerte Siyam</h1>
+        <a href="game.html">
+            <h2>Play</h2>
+        </a>
+        <button class="settings" onclick="openModal()">Settings</button>
+    </div>
+    <div class="modal-container close">
+        <div class="modal">
+            <h3>Sound</h3>
+            <input type="range" id="sound">
+            
+            <h3>Music</h3>
+            <span>
+                <input type="radio" name="music" value="Music 1">
+                <label for="music_1">Music 1</label><br>
+            </span>
+            <span>
+                <input type="radio" name="music" value="Music 2">
+                <label for="music_2">Music 2</label><br>
+            </span>
+            <span>
+                <input type="radio" name="music" value="Mute">
+                <label for="mute">Mute</label>
+            </span>
+            
+            <span>
+                <button>Save</button>
+                <button onclick="closeModal()">Exit</button>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        if(navigator.serviceWorker){
+            navigator.serviceWorker.register('sw.js')
+        }
+
+        function openModal(){
+            let modal = document.querySelector('.modal-container') 
+            modal.setAttribute('class', 'modal-container open')
+        }
+
+        function closeModal(){
+            let modal = document.querySelector('.modal-container') 
+            modal.setAttribute('class', 'modal-container close')
+        }
+    </script>
+</body>
+</html>
